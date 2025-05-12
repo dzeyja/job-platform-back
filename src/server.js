@@ -12,6 +12,12 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// Имитация задержки
+app.use(async (req, res, next) => {
+  await new Promise((res) => setTimeout(res, 800));
+  next();
+});
+
 // MongoDB Connection
 mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/job_platform')
   .then(() => console.log('Connected to MongoDB'))

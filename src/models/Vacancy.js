@@ -39,7 +39,11 @@ const vacancySchema = new mongoose.Schema({
     default: true
   },
   category: String,
-  language: String
+  language: String,
+  id: String,
+  cvlink: String,
+  specialty: String,
+  experience: String
 }, { timestamps: true });
 
 module.exports = mongoose.model('Vacancy', vacancySchema); 

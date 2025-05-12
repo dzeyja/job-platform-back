@@ -3,6 +3,7 @@ const router = express.Router();
 const VacancyResponse = require('../models/VacancyResponse');
 const TaskResponse = require('../models/TaskResponse');
 const Task = require('../models/Task');
+const mongoose = require('mongoose');
 
 // Get all vacancy responses
 router.get('/vacancy', async (req, res) => {
@@ -21,7 +22,10 @@ router.get('/vacancy', async (req, res) => {
 // Create vacancy response
 router.post('/vacancy', async (req, res) => {
   try {
-    const response = new VacancyResponse(req.body);
+    const response = new VacancyResponse({
+      ...req.body,
+      id: new mongoose.Types.ObjectId().toString() // Для совместимости с JSON Server
+    });
     const savedResponse = await response.save();
     res.status(201).json(savedResponse);
   } catch (error) {
@@ -81,7 +85,8 @@ router.post('/task', async (req, res) => {
       proposedPrice,
       estimatedTime,
       portfolio,
-      status: 'pending'
+      status: 'pending',
+      id: new mongoose.Types.ObjectId().toString() // Для совместимости с JSON Server
     });
 
     const savedResponse = await response.save();
